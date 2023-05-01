@@ -23,7 +23,7 @@
     color: navy;
     font-family: arial;
     "></p> <!-- 문제를 나타내는 요소 -->
-    <input placeholder="답 입력" type="text" style="WIDTH: 200pt; HEIGHT: 20pt" id="answer"> </p>
+    <input placeholder="답 입력" type="text" style="WIDTH: 200pt; HEIGHT: 20pt" id="answer" onkeyup="enterkey()"> </p>
 
     <button type=button style="WIDTH: 80pt; HEIGHT: 30pt" value="네모난버튼" onclick="checkAnswer()">확인</button>
     <p id="result"></p>
@@ -57,6 +57,14 @@
       var consecutiveCorrectAnswers = 0;
       var congratulated = false;
       let input= document.getElementById('answer');
+
+
+      function enterkey() {
+	if (window.event.keyCode == 13) {
+    checkAnswer()
+    	// 엔터키가 눌렸을 때
+    }
+}
 
       // 문제 출제 함수
       function generateQuestion() {
