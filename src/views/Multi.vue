@@ -21,15 +21,12 @@
         <v-divider></v-divider>
         <div class="text-caption">10번 연속으로 성공하면 축하 메세지가 있습니다!</div>
       </div>
-      <v-sheet class="mb-2 pa-2"></v-sheet>
       <v-divider></v-divider>
       <v-sheet class="mb-2 pa-2"></v-sheet>
       <div>
         <v-btn size="x-large" color="primary" append-icon="mdi-vuetify" variant="outlined" @click="generateQuestion()" >
   시작
 </v-btn>
-
-
 <v-btn size="x-large" color="primary" append-icon="mdi-wrench" variant="outlined" @click="reset()">
   리셋
 </v-btn>
@@ -56,15 +53,10 @@
 
     <div>
       combo: {{ correctCombo }} <br/>
-      남은시간: {{ timeRecord }} <br/>
       <br/>
       <v-divider></v-divider>
-<v-sheet class="mb-2 pa-2"></v-sheet>
-<v-sheet class="mb-2 pa-2"></v-sheet>
-<v-sheet class="mb-2 pa-2"></v-sheet>
-<v-sheet class="mb-2 pa-2"></v-sheet>
-<v-sheet class="mb-2 pa-2"></v-sheet>
-<v-sheet class="mb-2 pa-2"></v-sheet>
+
+
 <v-divider></v-divider>
 <v-card h-screen>
   <p> <v-btn  class="ma-1 " size="x-large" color="primary" type="submit" 
@@ -120,10 +112,10 @@ import {ref} from 'vue'
 //const answer= ref([])
 
 const question= ref('');
+const restTime= ref('');
 const answer= ref('');
 const result= ref('');
 const correctCombo= ref('');
-const timeRecord= ref('');
 const startTime= ref('');
 const timeLimit = 5; // 시간 제한 (초)
       //var startTime; // 퀴즈 시작 시간
@@ -165,15 +157,21 @@ function reset() {
         //document.getElementById("answer").value = "";
         //document.getElementById("result").innerHTML = "";
         correctCombo.value ='';
-      
+        restTime.value = '';
 }
 
 function checkAnswer() {
+
+      restTime.value = timeLimit
   //answer = document.getElementById("answer").value;
+
+
   if (answer.value == correctAnswer) {
      // document.getElementById("result").innerHTML = "딩동댕~ 최진아 짱! &#x1F601";
        result.value= "딩동댕~ 최진아 짱!";
        correctCombo.value++;
+       clearTimeout(timer); // 타이머 중지
+  clearInterval(timer); // 타이머 중지
        setTimeout(generateQuestion, 1000); // 2초 후 다음 문제 출제
 //  }  
       if (correctCombo.value == 5) {
@@ -196,6 +194,8 @@ function checkAnswer() {
 } else {
       result.value= "땡~ 틀렸어요.";
      correctCombo.value = ''
+     clearTimeout(timer); // 타이머 중지
+  clearInterval(timer); // 타이머 중지
      setTimeout(generateQuestion, 1000); // 2초 후 다음 문제 출제
 //  }  
 
@@ -207,6 +207,8 @@ function checkAnswer() {
 // 시간 초과 함수
 function timeOut() {
    result.value = "땡~ 시간 초과!";
+   clearTimeout(timer); // 타이머 중지
+  clearInterval(timer); // 타이머 중지
         setTimeout(generateQuestion, 1000); //2초 후 다음 문제 출제
         correctCombo.value =''
       }

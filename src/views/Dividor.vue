@@ -21,7 +21,6 @@
       <v-divider></v-divider>
       <div class="text-caption">10번 연속으로 성공하면 축하 메세지가 있습니다!</div>
     </div>
-    <v-sheet class="mb-2 pa-2"></v-sheet>
     <v-divider></v-divider>
     <v-sheet class="mb-2 pa-2"></v-sheet>
     <div>
@@ -52,19 +51,11 @@
 
 <p>답:{{ clickedAnswer }}</p>
   <p>결과:{{ result }}</p>
-
-
   <div>
     combo: {{ correctCombo }} <br/>
-    남은시간: {{ timeRecord }} <br/>
     <br/>
     <v-divider></v-divider>
-<v-sheet class="mb-2 pa-2"></v-sheet>
-<v-sheet class="mb-2 pa-2"></v-sheet>
-<v-sheet class="mb-2 pa-2"></v-sheet>
-<v-sheet class="mb-2 pa-2"></v-sheet>
-<v-sheet class="mb-2 pa-2"></v-sheet>
-<v-sheet class="mb-2 pa-2"></v-sheet>
+
 <v-divider></v-divider>
 <v-card h-screen>
 <p> <v-btn  class="ma-1 " size="x-large" color="primary" type="submit" 
@@ -175,6 +166,8 @@ if (answer.value == correctAnswer) {
    // document.getElementById("result").innerHTML = "딩동댕~ 최진아 짱! &#x1F601";
      result.value= "딩동댕~ 최진아 짱!";
      correctCombo.value++;
+     clearTimeout(timer); // 타이머 중지
+  clearInterval(timer); // 타이머 중지
      setTimeout(generateQuestion, 1000); // 2초 후 다음 문제 출제
 //  }  
     if (correctCombo.value == 5) {
@@ -196,10 +189,10 @@ clearInterval(timer); // 타이머 중지
 
 } else {
     result.value= "땡~ 틀렸어요.";
-   correctCombo.value = ''
-   setTimeout(generateQuestion, 1000); // 2초 후 다음 문제 출제
-//  }  
-
+   correctCombo.value = '';
+   clearTimeout(timer); // 타이머 중지
+clearInterval(timer); // 타이머 중지
+setTimeout(generateQuestion, 1000); // 2초 후 다음 문제 출제
    }
  
 }
@@ -208,8 +201,10 @@ clearInterval(timer); // 타이머 중지
 // 시간 초과 함수
 function timeOut() {
  result.value = "땡~ 시간 초과!";
-      setTimeout(generateQuestion, 1000); //2초 후 다음 문제 출제
-      correctCombo.value =''
+      correctCombo.value ='';
+      clearTimeout(timer); // 타이머 중지
+clearInterval(timer); // 타이머 중지
+setTimeout(generateQuestion, 1000); // 2초 후 다음 문제 출제
     }
 
 const clickedAnswer = ref('')
